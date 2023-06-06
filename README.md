@@ -52,10 +52,10 @@ Uninstall
 
  * Remove driver and plugin
    ```
-   sudo rm -r /System/Library/Extensions/SATSMARTDriver.kext
-   sudo rm -r /System/Library/Extensions/SATSMARTLib.plugin
-   sudo rm -r /Library/Extensions/SATSMARTDriver.kext
-   sudo rm -r /Library/Extensions/SATSMARTLib.plugin
+   sudo rm -r /System/Library/Extensions/SatSmartDriver.kext
+   sudo rm -r /System/Library/Extensions/SatSmartLib.plugin
+   sudo rm -r /Library/Extensions/SatSmartDriver.kext
+   sudo rm -r /Library/Extensions/SatSmartLib.plugin
    ```
  * Reboot
 
@@ -71,7 +71,7 @@ instead, it will use the `-d ata` option.
 
 You will also not be able to use `smartctl`'s USB device database to decide which
 protocol to use. Instead, the driver will choose a protocol according to its
-own database, `SATSMARTDriver.kext/Contents/Info.plist`. Because plists are plists,
+own database, `SatSmartDriver.kext/Contents/Info.plist`. Because plists are plists,
 the USB IDs are stored in decimal, not the usual hexadecimal. This database is
 quite outdated and I hope to find a way to generate it automatically from the
 smartmontools database.
@@ -101,7 +101,7 @@ it.
 
  * Test
    ```
-   cd SATSMARTDriver/build/Debug/
+   cd SatSmartDriver/build/Debug/
    ./smart_status
    ./smart_sample -a
    ```
@@ -114,7 +114,7 @@ it.
  * Reboot
 
  * If you want to limit the driver for certain hardware add product 
-   and vendor identification to SATSMARTDriver/Info.plist.
+   and vendor identification to SatSmartDriver/Info.plist.
    Check chapter "Adding enclosure identification"
 
 
@@ -123,9 +123,9 @@ it.
 Check, if the enclosure is identified using shell:
 
 ```bash-session
-ioreg -r -w 0 -c fi_dungeon_driver_IOSATDriver  | egrep 'Enclosure|PassThroughMode|Capable'| grep -v Identifiers
+ioreg -r -w 0 -c fi_dungeon_driver_IOSatDriver  | egrep 'Enclosure|PassThroughMode|Capable'| grep -v Identifiers
   |   "Enclosure Name" - "Unknown 0928:000a"
-  |   "SATSMARTCapable" - Yes
+  |   "SatSmartCapable" - Yes
   |   "PassThroughMode" - "sat16"
 ```
 

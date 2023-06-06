@@ -1,4 +1,4 @@
 #!/bin/sh
-kextunload -v -b org.dungeon.driver.SATSMARTDriver
-kextunload -v -b fi.dungeon.driver.SATSMARTDriver
+kextunload -v -b org.dungeon.driver.SatSmartDriver
+kextunload -v -b fi.dungeon.driver.SatSmartDriver
 exit 0

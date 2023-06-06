@@ -1,7 +1,7 @@
 /Root/
 /*.DS_Store
 
-SATSMARTDriver/SATSMARTDriver.xcodeproj/*.mode1v3
-SATSMARTDriver/SATSMARTDriver.xcodeproj/*.pbxuser
+SatSmartDriver/SatSmartDriver.xcodeproj/*.mode1v3
+SatSmartDriver/SatSmartDriver.xcodeproj/*.pbxuser
 /*~
-*/xcuserdata/*
+**/xcuserdata/
