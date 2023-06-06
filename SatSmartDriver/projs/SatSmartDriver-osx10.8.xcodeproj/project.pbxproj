@@ -39,7 +39,7 @@
 		32D94FC60562CBF700B6AF17 /* IOSatDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A224C3EFF42367911CA2CB7 /* IOSatDriver.h */; };
 		32D94FC80562CBF700B6AF17 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		32D94FCA0562CBF700B6AF17 /* IOSatDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A224C3FFF42367911CA2CB7 /* IOSatDriver.cpp */; settings = {ATTRIBUTES = (); }; };
-		A813773214E6F9DD005EAAE7 /* ATASMARTSample.c in Sources */ = {isa = PBXBuildFile; fileRef = A813773114E6F9DD005EAAE7 /* ATASMARTSample.c */; };
+		A813773214E6F9DD005EAAE7 /* AtaSmartSample.c in Sources */ = {isa = PBXBuildFile; fileRef = A813773114E6F9DD005EAAE7 /* AtaSmartSample.c */; };
 		A813773414E6F9F6005EAAE7 /* smart_status.c in Sources */ = {isa = PBXBuildFile; fileRef = A813773314E6F9F6005EAAE7 /* smart_status.c */; };
 		A81377E314E6FA10005EAAE7 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8CDB8B614E52EB500881848 /* IOKit.framework */; };
 		A81377E414E6FA1A005EAAE7 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8CDB8B614E52EB500881848 /* IOKit.framework */; };
@@ -116,7 +116,7 @@
 		8DA8362C06AD9B9200E5AC22 /* Kernel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kernel.framework; path = /System/Library/Frameworks/Kernel.framework; sourceTree = "<absolute>"; };
 		A813771514E6F99B005EAAE7 /* smart_status */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = smart_status; sourceTree = BUILT_PRODUCTS_DIR; };
 		A813772C14E6F9BC005EAAE7 /* smart_sample */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = smart_sample; sourceTree = BUILT_PRODUCTS_DIR; };
-		A813773114E6F9DD005EAAE7 /* ATASMARTSample.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ATASMARTSample.c; path = TestTools/ATASMARTSample.c; sourceTree = "<group>"; };
+		A813773114E6F9DD005EAAE7 /* AtaSmartSample.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = AtaSmartSample.c; path = TestTools/AtaSmartSample.c; sourceTree = "<group>"; };
 		A813773314E6F9F6005EAAE7 /* smart_status.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = smart_status.c; path = TestTools/smart_status.c; sourceTree = "<group>"; };
 		A875924114DC7B55001E6C26 /* IOSatServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOSatServices.h; sourceTree = "<group>"; };
 		A875926014DC8069001E6C26 /* IOSatServices.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IOSatServices.cpp; sourceTree = "<group>"; };
@@ -247,7 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				A813773314E6F9F6005EAAE7 /* smart_status.c */,
-				A813773114E6F9DD005EAAE7 /* ATASMARTSample.c */,
+				A813773114E6F9DD005EAAE7 /* AtaSmartSample.c */,
 				A87AE8BD14E19AC6000D2D60 /* SetPropertiesTestTool.cpp */,
 			);
 			name = TestTools;
@@ -491,7 +491,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A813773214E6F9DD005EAAE7 /* ATASMARTSample.c in Sources */,
+				A813773214E6F9DD005EAAE7 /* AtaSmartSample.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
