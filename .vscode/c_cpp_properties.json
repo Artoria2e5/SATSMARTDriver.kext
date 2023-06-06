@@ -11,7 +11,9 @@
                 "DEBUG=1",
                 "KERNEL=1",
                 "__builtin_expect(a,b)=(b)",
-                "bzero(p,n)=memset(p,0,n)"
+                "bzero(p,n)=memset(p,0,n)",
+                "__exported=/* */",
+                "__attribute__(a)=/* */",
             ],
             "macFrameworkPath": [
                 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks",

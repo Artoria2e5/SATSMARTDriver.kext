@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        "corefoundation.h": "c",
+        "cfpropertylist.h": "c",
+        "cfstream.h": "c",
+        "dispatch.h": "c"
+    }
+}

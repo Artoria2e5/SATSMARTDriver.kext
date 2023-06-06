@@ -28,37 +28,34 @@
 #ifndef _IOSYNCER_H
 #define _IOSYNCER_H
 
-#include <libkern/c++/OSObject.h>
-#include <IOKit/IOTypes.h>
 #include <IOKit/IOLocks.h>
+#include <IOKit/IOTypes.h>
+#include <libkern/c++/OSObject.h>
 
-class IOSyncer : public OSObject
-{
-    OSDeclareDefaultStructors(IOSyncer)
+class IOSyncer : public OSObject {
+    OSDeclareDefaultStructors(IOSyncer);
 
 private:
-    // The spin lock that is used to guard the 'threadMustStop' variable. 
-    IOSimpleLock *guardLock;
+    // The spin lock that is used to guard the 'threadMustStop' variable.
+    IOSimpleLock* guardLock;
     volatile bool threadMustStop;
-    IOReturn fResult;
-    virtual void free();
-    virtual void privateSignal();
+    IOReturn      fResult;
+    virtual void  free();
+    virtual void  privateSignal();
 
 public:
-
-    static IOSyncer * create(bool twoRetains = true)
-	APPLE_KEXT_DEPRECATED;
+    static IOSyncer* create(bool twoRetains = true)
+        APPLE_KEXT_DEPRECATED;
 
     virtual bool init(bool twoRetains)
-	APPLE_KEXT_DEPRECATED;
+        APPLE_KEXT_DEPRECATED;
     virtual void reinit()
-	APPLE_KEXT_DEPRECATED;
+        APPLE_KEXT_DEPRECATED;
     virtual IOReturn wait(bool autoRelease = true)
-	APPLE_KEXT_DEPRECATED;
-    virtual void signal(IOReturn res = kIOReturnSuccess,
-					bool autoRelease = true)
-	APPLE_KEXT_DEPRECATED;
+        APPLE_KEXT_DEPRECATED;
+    virtual void signal(IOReturn res         = kIOReturnSuccess,
+        bool                     autoRelease = true)
+        APPLE_KEXT_DEPRECATED;
 };
 
 #endif /* !_IOSYNCER */
-

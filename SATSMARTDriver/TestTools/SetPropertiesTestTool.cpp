@@ -6,7 +6,6 @@
  g++ -framework CoreFoundation -framework IOKit -o SetPropertiesTestTool SetPropertiesTestTool.cpp
  */
 
-
 /*
  File:           SetPropertiesTestTool.c
  
@@ -67,37 +66,38 @@
 // This allows the same code to build using the 10.4.0 SDK for Intel-based systems and earlier SDKs for backwards compatibility
 // with PowerPC-based systems.
 #ifndef IO_OBJECT_NULL
-#define IO_OBJECT_NULL  ((io_object_t) 0)
+#define IO_OBJECT_NULL ((io_object_t) 0)
 #endif
 
-int main (int argc, const char *argv[])
+int
+main(int argc, const char* argv[])
 {
     CFMutableDictionaryRef dictRef;
-    io_iterator_t iter;
-    io_service_t service;
-    kern_return_t kr;
-    CFNumberRef numberRef;
-    SInt32 constantOne = 1;
-    
-    constantOne=42;
-    
+    io_iterator_t          iter;
+    io_service_t           service;
+    kern_return_t          kr;
+    CFNumberRef            numberRef;
+    SInt32                 constantOne = 1;
+
+    constantOne = 42;
+
     if (argc > 1) {
         constantOne = atoi(argv[1]);
     }
-    
+
     // The bulk of this code locates all instances of our driver running on the system.
-    
+
     // First find all children of our driver. As opposed to nubs, drivers are often not registered
     // via the registerServices call because nothing is expected to match to them. Unregistered
     // objects in the I/O Registry are not returned by IOServiceGetMatchingServices.
-    
+
     // IOBlockStorageServices is our child in the I/O Registry
     dictRef = IOServiceMatching("IOBlockStorageServices");
     if (!dictRef) {
         fprintf(stderr, "IOServiceMatching returned NULL.\n");
         return -1;
     }
-    
+
     // Create an iterator over all matching IOService nubs.
     // This consumes a reference on dictRef.
     kr = IOServiceGetMatchingServices(kIOMasterPortDefault, dictRef, &iter);
@@ -106,27 +106,26 @@ int main (int argc, const char *argv[])
         CFRelease(dictRef);
         return -1;
     }
-    
+
     // Create a dictionary to pass to our driver. This dictionary has the key "MyProperty"
     // and the value an integer 1.
     dictRef = CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
-                                        &kCFTypeDictionaryKeyCallBacks,
-                                        &kCFTypeDictionaryValueCallBacks);
-    
+        &kCFTypeDictionaryKeyCallBacks,
+        &kCFTypeDictionaryValueCallBacks);
+
     numberRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &constantOne);
     CFDictionarySetValue(dictRef, CFSTR("MyProperty"), numberRef);
     CFRelease(numberRef);
-    
+
     // Iterate across all instances of IOBlockStorageServices.
     while ((service = IOIteratorNext(iter))) {
         io_registry_entry_t parent;
-        
+
         // Now that our child has been found we can traverse the I/O Registry to find our driver.
         kr = IORegistryEntryGetParentEntry(service, kIOServicePlane, &parent);
         if (KERN_SUCCESS != kr) {
             fprintf(stderr, "IORegistryEntryGetParentEntry returned 0x%08x.\n", kr);
-        }
-        else {
+        } else {
             // We're only interested in the parent object if it's our driver class.
             if (IOObjectConformsTo(parent, "fi_dungeon_driver_IOSATDriver")) {
                 // This is the function that results in ::setProperties() being called in our
@@ -136,25 +135,24 @@ int main (int argc, const char *argv[])
                     fprintf(stderr, "IORegistryEntrySetCFProperties returned 0x%08x.\n", kr);
                 }
             }
-            
+
             // Done with the parent object.
             IOObjectRelease(parent);
         }
-        
+
         // Done with the object returned by the iterator.
         IOObjectRelease(service);
     }
-    
+
     if (iter != IO_OBJECT_NULL) {
         IOObjectRelease(iter);
         iter = IO_OBJECT_NULL;
     }
-    
+
     if (dictRef) {
         CFRelease(dictRef);
         dictRef = NULL;
     }
-    
+
     return 0;
 }
-

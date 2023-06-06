@@ -29,7 +29,6 @@
 
 #if defined(KERNEL) && defined(__cplusplus)
 
-
 //—————————————————————————————————————————————————————————————————————————————
 //	Includes
 //—————————————————————————————————————————————————————————————————————————————
@@ -47,61 +46,55 @@ class IOSATCommand;
 //	Class Declaration
 //—————————————————————————————————————————————————————————————————————————————
 
-class IOSATServices : public IOBlockStorageServices
-{
-    
-    OSDeclareDefaultStructors ( IOSATServices )
-    
+class IOSATServices : public IOBlockStorageServices {
+    OSDeclareDefaultStructors(IOSATServices);
+
 protected:
-    
-    OSSet *                                                         fClients;
-    
+    OSSet* fClients;
+
     //virtual void	free ( void );
-    
+
     // Reserve space for future expansion.
-    struct IOSATServicesExpansionData { };
-    IOSATServicesExpansionData * fIOSATServicesReserved;
-    
+    struct IOSATServicesExpansionData {
+    };
+    IOSATServicesExpansionData* fIOSATServicesReserved;
+
 public:
-    
-    virtual bool            attach ( IOService * provider );
-    virtual void            detach ( IOService * provider );
-    virtual IOReturn    newUserClient (
-                                       task_t owningTask,
-                                       void *                       securityID,
-                                       UInt32 type,
-                                       OSDictionary *       properties,
-                                       IOUserClient **      handler );
-    
-    virtual bool                handleOpen ( IOService * client, IOOptionBits options, void * access );
-    virtual void            handleClose ( IOService * client, IOOptionBits options );
-    virtual bool                handleIsOpen ( const IOService * client ) const;
-    
+    virtual bool     attach(IOService* provider);
+    virtual void     detach(IOService* provider);
+    virtual IOReturn newUserClient(
+        task_t         owningTask,
+        void*          securityID,
+        UInt32         type,
+        OSDictionary*  properties,
+        IOUserClient** handler);
+
+    virtual bool handleOpen(IOService* client, IOOptionBits options, void* access);
+    virtual void handleClose(IOService* client, IOOptionBits options);
+    virtual bool handleIsOpen(const IOService* client) const;
+
 public:
-    
-    virtual IOReturn        sendSMARTCommand ( IOSATCommand * command );
-    
+    virtual IOReturn sendSMARTCommand(IOSATCommand* command);
+
     // Binary Compatibility reserved method space
-    OSMetaClassDeclareReservedUnused ( IOSATServices, 0 );
-    OSMetaClassDeclareReservedUnused ( IOSATServices, 1 );
-    OSMetaClassDeclareReservedUnused ( IOSATServices, 2 );
-    OSMetaClassDeclareReservedUnused ( IOSATServices, 3 );
-    OSMetaClassDeclareReservedUnused ( IOSATServices, 4 );
-    OSMetaClassDeclareReservedUnused ( IOSATServices, 5 );
-    OSMetaClassDeclareReservedUnused ( IOSATServices, 6 );
-    OSMetaClassDeclareReservedUnused ( IOSATServices, 7 );
-    OSMetaClassDeclareReservedUnused ( IOSATServices, 8 );
-    OSMetaClassDeclareReservedUnused ( IOSATServices, 9 );
-    OSMetaClassDeclareReservedUnused ( IOSATServices, 10 );
-    OSMetaClassDeclareReservedUnused ( IOSATServices, 11 );
-    OSMetaClassDeclareReservedUnused ( IOSATServices, 12 );
-    OSMetaClassDeclareReservedUnused ( IOSATServices, 13 );
-    OSMetaClassDeclareReservedUnused ( IOSATServices, 14 );
-    OSMetaClassDeclareReservedUnused ( IOSATServices, 15 );
-    
-    
+    OSMetaClassDeclareReservedUnused(IOSATServices, 0);
+    OSMetaClassDeclareReservedUnused(IOSATServices, 1);
+    OSMetaClassDeclareReservedUnused(IOSATServices, 2);
+    OSMetaClassDeclareReservedUnused(IOSATServices, 3);
+    OSMetaClassDeclareReservedUnused(IOSATServices, 4);
+    OSMetaClassDeclareReservedUnused(IOSATServices, 5);
+    OSMetaClassDeclareReservedUnused(IOSATServices, 6);
+    OSMetaClassDeclareReservedUnused(IOSATServices, 7);
+    OSMetaClassDeclareReservedUnused(IOSATServices, 8);
+    OSMetaClassDeclareReservedUnused(IOSATServices, 9);
+    OSMetaClassDeclareReservedUnused(IOSATServices, 10);
+    OSMetaClassDeclareReservedUnused(IOSATServices, 11);
+    OSMetaClassDeclareReservedUnused(IOSATServices, 12);
+    OSMetaClassDeclareReservedUnused(IOSATServices, 13);
+    OSMetaClassDeclareReservedUnused(IOSATServices, 14);
+    OSMetaClassDeclareReservedUnused(IOSATServices, 15);
 };
 
-#endif  /* defined(KERNEL) && defined(__cplusplus) */
+#endif /* defined(KERNEL) && defined(__cplusplus) */
 
 #endif /* _IOKIT_IO_SAT_SERVICES_H_ */

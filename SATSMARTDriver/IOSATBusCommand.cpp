@@ -30,27 +30,25 @@
  *
  */
 
-
 #include <IOKit/IOTypes.h>
 #ifndef APPLE_KEXT_DEPRECATED
-#define APPLE_KEXT_DEPRECATED  __attribute__((deprecated))
+#define APPLE_KEXT_DEPRECATED __attribute__((deprecated))
 #endif
 #include "IOSyncer.h"
 //#include "IOATATypes.h"
-#include <IOKit/ata/IOATATypes.h>
-#include "IOSATCommand.h"
 #include "IOSATBusCommand.h"
-
+#include "IOSATCommand.h"
+#include <IOKit/ata/IOATATypes.h>
 
 #ifdef DLOG
 #undef DLOG
 #endif
 
 #ifdef __GNUC__
-#ifdef  DEBUG
-#define DLOG(fmt, args ...)  IOLog(fmt, ## args)
+#ifdef DEBUG
+#define DLOG(fmt, args...) IOLog(fmt, ##args)
 #else
-#define DLOG(fmt, args ...)
+#define DLOG(fmt, args...)
 #endif
 #else
 #define DLOG(fmt, ...)
@@ -60,7 +58,7 @@
 
 #define super IOSATCommand
 
-OSDefineMetaClassAndStructors( IOSATBusCommand, IOSATCommand );
+OSDefineMetaClassAndStructors(IOSATBusCommand, IOSATCommand);
 OSMetaClassDefineReservedUnused(IOSATBusCommand, 0);
 OSMetaClassDefineReservedUnused(IOSATBusCommand, 1);
 OSMetaClassDefineReservedUnused(IOSATBusCommand, 2);
@@ -83,7 +81,6 @@ OSMetaClassDefineReservedUnused(IOSATBusCommand, 18);
 OSMetaClassDefineReservedUnused(IOSATBusCommand, 19);
 OSMetaClassDefineReservedUnused(IOSATBusCommand, 20);
 
-
 /*-----------------------------------------------------------------------------
  *  Static allocator.
  *
@@ -92,21 +89,17 @@ IOSATBusCommand*
 IOSATBusCommand::allocateCmd(void)
 {
     IOSATBusCommand* cmd = new IOSATBusCommand;
-    
-    if( cmd == NULL)
+
+    if (cmd == NULL)
         return NULL;
-    
-    
-    if( !cmd->init() )
-    {
+
+    if (!cmd->init()) {
         cmd->free();
         return NULL;
     }
-    
-    return cmd;
-    
-}
 
+    return cmd;
+}
 
 /*-----------------------------------------------------------------------------
  *
@@ -115,13 +108,12 @@ IOSATBusCommand::allocateCmd(void)
 bool
 IOSATBusCommand::init()
 {
-    if( !super::init() )
+    if (!super::init())
         return false;
-    
+
     zeroCommand();
-    
+
     return true;
-    
 }
 
 /*-----------------------------------------------------------------------------
@@ -131,15 +123,12 @@ IOSATBusCommand::init()
 void
 IOSATBusCommand::zeroCommand(void)
 {
-    queue_init( &queueChain );
-    state = 0;
+    queue_init(&queueChain);
+    state  = 0;
     syncer = NULL;
-    
+
     super::zeroCommand();
-    
 }
-
-
 
 /*-----------------------------------------------------------------------------
  *
@@ -147,13 +136,10 @@ IOSATBusCommand::zeroCommand(void)
  *-----------------------------------------------------------------------------*/
 // return the command opcode
 ataOpcode
-IOSATBusCommand::getOpcode( void )
+IOSATBusCommand::getOpcode(void)
 {
-    
     return _opCode;
-    
 }
-
 
 /*-----------------------------------------------------------------------------
  *
@@ -161,11 +147,9 @@ IOSATBusCommand::getOpcode( void )
  *-----------------------------------------------------------------------------*/
 // get the command flags
 ataFlags
-IOSATBusCommand::getFlags ( void )
+IOSATBusCommand::getFlags(void)
 {
-    
     return (ataFlags) _flags;
-    
 }
 
 /*-----------------------------------------------------------------------------
@@ -173,13 +157,10 @@ IOSATBusCommand::getFlags ( void )
  *
  *-----------------------------------------------------------------------------*/
 ataRegMask
-IOSATBusCommand::getRegMask( void )
+IOSATBusCommand::getRegMask(void)
 {
     return _regMask;
-    
 }
-
-
 
 /*-----------------------------------------------------------------------------
  *
@@ -187,13 +168,10 @@ IOSATBusCommand::getRegMask( void )
  *-----------------------------------------------------------------------------*/
 // return the unit id (0 master, 1 slave)
 ataUnitID
-IOSATBusCommand::getUnit( void )
+IOSATBusCommand::getUnit(void)
 {
-    
     return _unit;
-    
 }
-
 
 /*-----------------------------------------------------------------------------
  *
@@ -201,13 +179,10 @@ IOSATBusCommand::getUnit( void )
  *-----------------------------------------------------------------------------*/
 // return the timeout value for this command
 UInt32
-IOSATBusCommand::getTimeoutMS (void )
+IOSATBusCommand::getTimeoutMS(void)
 {
-    
     return _timeoutMS;
-    
 }
-
 
 /*-----------------------------------------------------------------------------
  *
@@ -215,13 +190,10 @@ IOSATBusCommand::getTimeoutMS (void )
  *-----------------------------------------------------------------------------*/
 // return the callback pointer
 IOSATCompletionFunction*
-IOSATBusCommand::getCallbackPtr (void )
+IOSATBusCommand::getCallbackPtr(void)
 {
-    
     return _callback;
-    
 }
-
 
 /*-----------------------------------------------------------------------------
  *
@@ -232,19 +204,14 @@ void
 IOSATBusCommand::executeCallback(void)
 {
     _inUse = false;
-    
-    if(_callback != NULL)
-    {
+
+    if (_callback != NULL) {
         (*_callback)(this);
-        
-    } else if( syncer != NULL ) {
-        
+
+    } else if (syncer != NULL) {
         syncer->signal();
         syncer = NULL;
-        
     }
-    
-    
 }
 
 /*-----------------------------------------------------------------------------
@@ -254,9 +221,7 @@ IOSATBusCommand::executeCallback(void)
 IOByteCount
 IOSATBusCommand::getTransferChunkSize(void)
 {
-    
     return _logicalChunkSize;
-    
 }
 
 ataTaskFile*
@@ -271,7 +236,6 @@ IOSATBusCommand::getPacketSize(void)
     return _packet.atapiPacketSize;
 }
 
-
 UInt16*
 IOSATBusCommand::getPacketData(void)
 {
@@ -279,59 +243,48 @@ IOSATBusCommand::getPacketData(void)
 }
 
 IOByteCount
-IOSATBusCommand::getByteCount (void)
+IOSATBusCommand::getByteCount(void)
 {
-    
     return _byteCount;
 }
 
-
 IOByteCount
-IOSATBusCommand::getPosition (void)
+IOSATBusCommand::getPosition(void)
 {
-    
     return _position;
-    
 }
 
-
-
 IOMemoryDescriptor*
-IOSATBusCommand::getBuffer ( void)
+IOSATBusCommand::getBuffer(void)
 {
     return _desc;
 }
 
-
 void
-IOSATBusCommand::setActualTransfer ( IOByteCount bytesTransferred )
+IOSATBusCommand::setActualTransfer(IOByteCount bytesTransferred)
 {
     _actualByteCount = bytesTransferred;
 }
 
 void
-IOSATBusCommand::setResult( IOReturn inResult)
+IOSATBusCommand::setResult(IOReturn inResult)
 {
-    
     _result = inResult;
 }
 
-
 void
-IOSATBusCommand::setCommandInUse( bool inUse /* = true */)
+IOSATBusCommand::setCommandInUse(bool inUse /* = true */)
 {
-    
     _inUse = inUse;
-    
 }
 
-#pragma mark -- IOSATBusCommand64 --
+#pragma mark-- IOSATBusCommand64 --
 
 #undef super
 
 #define super IOSATBusCommand
 
-OSDefineMetaClassAndStructors( IOSATBusCommand64, super );
+OSDefineMetaClassAndStructors(IOSATBusCommand64, super);
 
 /*-----------------------------------------------------------------------------
  *  Static allocator.
@@ -341,20 +294,16 @@ IOSATBusCommand64*
 IOSATBusCommand64::allocateCmd32(void)
 {
     IOSATBusCommand64* cmd = new IOSATBusCommand64;
-    
-    if( cmd == NULL)
+
+    if (cmd == NULL)
         return NULL;
-    
-    
-    if( !cmd->init() )
-    {
+
+    if (!cmd->init()) {
         cmd->free();
         return NULL;
     }
-    
-    
+
     return cmd;
-    
 }
 
 /*-----------------------------------------------------------------------------
@@ -364,27 +313,23 @@ IOSATBusCommand64::allocateCmd32(void)
 bool
 IOSATBusCommand64::init()
 {
-    if( !super::init() )
+    if (!super::init())
         return false;
-    
+
     zeroCommand();
-    
+
     _dmaCmd = IODMACommand::withSpecification(IODMACommand::OutputHost32,
-                                              32,
-                                              0x10000,
-                                              IODMACommand::kMapped,
-                                              512 * 2048,
-                                              2);
-    
-    
-    if( !_dmaCmd )
-    {
+        32,
+        0x10000,
+        IODMACommand::kMapped,
+        512 * 2048,
+        2);
+
+    if (!_dmaCmd) {
         return false;
     }
-    
-    
+
     return true;
-    
 }
 
 /*-----------------------------------------------------------------------------
@@ -394,16 +339,13 @@ IOSATBusCommand64::init()
 void
 IOSATBusCommand64::zeroCommand(void)
 {
-    if(_dmaCmd != NULL)
-    {
-        if( _dmaCmd->getMemoryDescriptor() != NULL)
-        {
+    if (_dmaCmd != NULL) {
+        if (_dmaCmd->getMemoryDescriptor() != NULL) {
             _dmaCmd->clearMemoryDescriptor();
         }
     }
-    
+
     super::zeroCommand();
-    
 }
 
 /*-----------------------------------------------------------------------------
@@ -414,72 +356,53 @@ IOSATBusCommand64::zeroCommand(void)
 void
 IOSATBusCommand64::free()
 {
-    
-    if( _dmaCmd != NULL )
-    {
+    if (_dmaCmd != NULL) {
         _dmaCmd->clearMemoryDescriptor();
         _dmaCmd->release();
         _dmaCmd = NULL;
     }
-    
+
     super::free();
-    
 }
 
 void
-IOSATBusCommand64::setBuffer ( IOMemoryDescriptor* inDesc)
+IOSATBusCommand64::setBuffer(IOMemoryDescriptor* inDesc)
 {
-    
-    super::setBuffer( inDesc );
-    
+    super::setBuffer(inDesc);
 }
 
 void
 IOSATBusCommand64::executeCallback(void)
 {
-    if( _dmaCmd != NULL
-       && _desc != NULL
-       && ( _flags & mATAFlagUseDMA ) )
-    {
+    if (_dmaCmd != NULL
+        && _desc != NULL
+        && (_flags & mATAFlagUseDMA)) {
         _dmaCmd->complete();
     }
-    
-    if( _dmaCmd != NULL) {
+
+    if (_dmaCmd != NULL) {
         _dmaCmd->clearMemoryDescriptor();
     }
-    
+
     super::executeCallback();
-    
 }
 
-
 IODMACommand*
-IOSATBusCommand64::GetDMACommand( void )
+IOSATBusCommand64::GetDMACommand(void)
 {
-    
     return _dmaCmd;
-    
 }
 
 void
-IOSATBusCommand64::setCommandInUse( bool inUse /* = true */)
+IOSATBusCommand64::setCommandInUse(bool inUse /* = true */)
 {
-    
-    if( inUse )
-    {
-        
-        if( _dmaCmd != NULL
-           && _desc != NULL
-           && ( _flags & mATAFlagUseDMA ) )
-        {
-            _dmaCmd->setMemoryDescriptor( _desc, true );
-            
-            
+    if (inUse) {
+        if (_dmaCmd != NULL
+            && _desc != NULL
+            && (_flags & mATAFlagUseDMA)) {
+            _dmaCmd->setMemoryDescriptor(_desc, true);
         }
-        
-        
     }
-    
-    super::setCommandInUse( inUse);
-    
+
+    super::setCommandInUse(inUse);
 }

@@ -27,30 +27,26 @@
  * @APPLE_LICENSE_HEADER_END@
  */
 
-
 #ifndef __SAT_SMART_LIB_PRIV_H__
 #define __SAT_SMART_LIB_PRIV_H__
-
 
 //—————————————————————————————————————————————————————————————————————————————
 //	Structures
 //—————————————————————————————————————————————————————————————————————————————
 
 // There seem to be 4k max size in mach messages, so we have to use a pointer
-#define kSATMaxDataSize                   (512 * 16)
+#define kSATMaxDataSize (512 * 16)
 
-typedef struct ATASMARTReadLogStruct
-{
+typedef struct ATASMARTReadLogStruct {
     UInt8 numSectors;
     UInt8 logAddress;
 } ATASMARTReadLogStruct;
 
-typedef struct ATASMARTWriteLogStruct
-{
-    mach_vm_address_t   data_pointer;
-    mach_vm_size_t      data_length;
-    UInt8 numSectors;
-    UInt8 logAddress;
+typedef struct ATASMARTWriteLogStruct {
+    mach_vm_address_t data_pointer;
+    mach_vm_size_t    data_length;
+    UInt8             numSectors;
+    UInt8             logAddress;
     //UInt32 bufferSize;
     //UInt8 buffer[kSATMaxDataSize];
 } ATASMARTWriteLogStruct;
@@ -61,8 +57,8 @@ typedef struct ATASMARTWriteLogStruct
 
 enum
 {
-    kIOATASMARTUserClientAccessBit          = 16,
-    kIOATASMARTUserClientAccessMask         = (1 << kIOATASMARTUserClientAccessBit)
+    kIOATASMARTUserClientAccessBit  = 16,
+    kIOATASMARTUserClientAccessMask = (1 << kIOATASMARTUserClientAccessBit)
 };
 
 enum
@@ -72,24 +68,22 @@ enum
 
 enum
 {
-    kIOATASMARTEnableDisableOperations                              = 0,        // kIOUCScalarIScalarO, 1, 0
-    kIOATASMARTEnableDisableAutoSave                                = 1,        // kIOUCScalarIScalarO, 1, 0
-    kIOATASMARTReturnStatus                                                 = 2,        // kIOUCScalarIScalarO, 0, 1
-    kIOATASMARTExecuteOffLineImmediate                              = 3,        // kIOUCScalarIScalarO, 1, 0
-    kIOATASMARTReadData                                                             = 4,        // kIOUCScalarIStructO, 1, 0
-    kIOATASMARTReadDataThresholds                                   = 5,        // kIOUCScalarIStructO, 1, 0
-    kIOATASMARTReadLogAtAddress                                             = 6,        // kIOUCScalarIStructI, 0, sizeof (ATASMARTReadLogStruct)
-    kIOATASMARTWriteLogAtAddress                                    = 7,        // kIOUCScalarIStructI, 0, sizeof (ATASMARTWriteLogStruct)
-    kIOATASMARTGetIdentifyData                                              = 8,        // kIOUCStructIStructO, sizeof (ATAGetIdentifyDataStruct), sizeof (UInt32)
+    kIOATASMARTEnableDisableOperations = 0, // kIOUCScalarIScalarO, 1, 0
+    kIOATASMARTEnableDisableAutoSave   = 1, // kIOUCScalarIScalarO, 1, 0
+    kIOATASMARTReturnStatus            = 2, // kIOUCScalarIScalarO, 0, 1
+    kIOATASMARTExecuteOffLineImmediate = 3, // kIOUCScalarIScalarO, 1, 0
+    kIOATASMARTReadData                = 4, // kIOUCScalarIStructO, 1, 0
+    kIOATASMARTReadDataThresholds      = 5, // kIOUCScalarIStructO, 1, 0
+    kIOATASMARTReadLogAtAddress        = 6, // kIOUCScalarIStructI, 0, sizeof (ATASMARTReadLogStruct)
+    kIOATASMARTWriteLogAtAddress       = 7, // kIOUCScalarIStructI, 0, sizeof (ATASMARTWriteLogStruct)
+    kIOATASMARTGetIdentifyData         = 8, // kIOUCStructIStructO, sizeof (ATAGetIdentifyDataStruct), sizeof (UInt32)
     kIOATASMARTMethodCount
 };
 
-
-#define kATASMARTUserClientClassKey                     "SATSMARTUserClient"
-#define kATASMARTUserClientTypeIDKey            "24514B7A-2804-11D6-8A02-003065704866"
+#define kATASMARTUserClientClassKey  "SATSMARTUserClient"
+#define kATASMARTUserClientTypeIDKey "24514B7A-2804-11D6-8A02-003065704866"
 //#define kATASMARTUserClientLibLocationKey	"IOATAFamily.kext/Contents/PlugIns/IOATABlockStorage.kext/Contents/PlugIns/ATASMARTLib.plugin"
-#define kSATSMARTUserClientLibLocationKey       "SATSMARTLib.plugin"
+#define kSATSMARTUserClientLibLocationKey "SATSMARTLib.plugin"
 //#define kSATSMARTUserClientLibLocationKey	"SATSMARTDriver.kext/Contents/PlugIns/SATSMARTLib.plugin"
 
-
-#endif  /* __SAT_SMART_LIB_PRIV_H__ */
+#endif /* __SAT_SMART_LIB_PRIV_H__ */
