@@ -33,8 +33,10 @@ On newer macOS, try (must be run in Recovery OS):
 
 If you are using [OpenCore](https://github.com/acidanthera/OpenCorePkg),
 you can move the kext file from its standard install location (/Library/Extensions/)
-to the EFI OpenCore directory and load it the OC way.  You will need to move the plugin file with it.
+to the EFI OpenCore directory and load it the OC way.
 
+The `.plugin` file is only used to support the example client. `smartctl`
+does not use it.
 
 Install
 =======

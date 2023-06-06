@@ -932,15 +932,15 @@ fi_dungeon_driver_IOSATDriver::IdentifyDevice ( void )
             }
         }
 
-        ERROR_LOG("%s[%p]::%s Trying with PassThrough12\n", getClassName(), this,  __FUNCTION__);
-        fPassThroughMode = kPassThroughModeSAT12;
-        setProperty(kPassThroughMode, "sat12");
+        ERROR_LOG("%s[%p]::%s Trying with PassThrough16\n", getClassName(), this,  __FUNCTION__);
+        fPassThroughMode = kPassThroughModeSAT16;
+        setProperty(kPassThroughMode, "sat16");
         fSATSMARTCapable = Send_ATA_IDENTIFY();
         if (!fSATSMARTCapable) {
-            ERROR_LOG("%s[%p]::%s SAT PassThrough12 failed, retrying with PassThrough16\n", getClassName(), this,  __FUNCTION__);
+            ERROR_LOG("%s[%p]::%s SAT PassThrough16 failed, retrying with PassThrough12\n", getClassName(), this,  __FUNCTION__);
             fSATSMARTCapable = true;
-            fPassThroughMode = kPassThroughModeSAT16;
-            setProperty(kPassThroughMode, "sat16");
+            fPassThroughMode = kPassThroughModeSAT12;
+            setProperty(kPassThroughMode, "sat12");
             fSATSMARTCapable = Send_ATA_IDENTIFY();
         }
         if (!fSATSMARTCapable) {
@@ -1978,17 +1978,17 @@ fi_dungeon_driver_IOSATDriver::PASS_THROUGH_12or16 (
                                       DEVICE, COMMAND, CONTROL,
                                       direction, transferCount );
         
-    } else if (fPassThroughMode == kPassThroughModeSAT16) {
+    } else if (fPassThroughMode == kPassThroughModeSAT12) {
+        result = PASS_THROUGH_12( request, dataBuffer,
+                            MULTIPLE_COUNT, PROTOCOL, EXTEND, OFF_LINE, CK_COND, T_DIR, BYT_BLOK, T_LENGTH,
+                            (SCSICmdField1Byte) FEATURES, (SCSICmdField1Byte) SECTOR_COUNT,
+                            (SCSICmdField1Byte) LBA_LOW, (SCSICmdField1Byte) LBA_MID, (SCSICmdField1Byte) LBA_HIGH,
+                            DEVICE, COMMAND, CONTROL);
+    } else {
         result = PASS_THROUGH_16( request, dataBuffer,
                                  MULTIPLE_COUNT, PROTOCOL, EXTEND, OFF_LINE, CK_COND, T_DIR, BYT_BLOK, T_LENGTH,
                                  FEATURES, SECTOR_COUNT,
                                  LBA_LOW, LBA_MID, LBA_HIGH,
-                                 DEVICE, COMMAND, CONTROL);
-    } else {
-        result = PASS_THROUGH_12( request, dataBuffer,
-                                 MULTIPLE_COUNT, PROTOCOL, EXTEND, OFF_LINE, CK_COND, T_DIR, BYT_BLOK, T_LENGTH,
-                                 (SCSICmdField1Byte) FEATURES, (SCSICmdField1Byte) SECTOR_COUNT,
-                                 (SCSICmdField1Byte) LBA_LOW, (SCSICmdField1Byte) LBA_MID, (SCSICmdField1Byte) LBA_HIGH,
                                  DEVICE, COMMAND, CONTROL);
     }
     
