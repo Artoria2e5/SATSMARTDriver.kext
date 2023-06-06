@@ -95,7 +95,7 @@ enum
 
 
 #define super IOSCSIPeripheralDeviceType00
-OSDefineMetaClassAndStructors(fi_dungeon_driver_IOSATDriver, IOSCSIPeripheralDeviceType00)
+OSDefineMetaClassAndStructors(fi_dungeon_driver_IOSATDriver, IOSCSIPeripheralDeviceType00);
 
 /////////////
 static void hexdump16(UInt16 *data, int start, int len) {

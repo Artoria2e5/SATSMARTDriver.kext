@@ -46,18 +46,21 @@
 #undef DLOG
 #endif
 
+#ifdef __GNUC__
 #ifdef  DEBUG
 #define DLOG(fmt, args ...)  IOLog(fmt, ## args)
 #else
 #define DLOG(fmt, args ...)
 #endif
-
+#else
+#define DLOG(fmt, ...)
+#endif
 
 //---------------------------------------------------------------------------
 
 #define super IOSATCommand
 
-OSDefineMetaClassAndStructors( IOSATBusCommand, IOSATCommand )
+OSDefineMetaClassAndStructors( IOSATBusCommand, IOSATCommand );
 OSMetaClassDefineReservedUnused(IOSATBusCommand, 0);
 OSMetaClassDefineReservedUnused(IOSATBusCommand, 1);
 OSMetaClassDefineReservedUnused(IOSATBusCommand, 2);
@@ -328,7 +331,7 @@ IOSATBusCommand::setCommandInUse( bool inUse /* = true */)
 
 #define super IOSATBusCommand
 
-OSDefineMetaClassAndStructors( IOSATBusCommand64, super )
+OSDefineMetaClassAndStructors( IOSATBusCommand64, super );
 
 /*-----------------------------------------------------------------------------
  *  Static allocator.

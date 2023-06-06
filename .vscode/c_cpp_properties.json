@@ -4,13 +4,17 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/**"
+                "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/**",
+                "${workspaceFolder}/../_macsdk/**"
             ],
             "defines": [
-                "DEBUG=1"
+                "DEBUG=1",
+                "KERNEL=1",
+                "__builtin_expect(a,b)=(b)",
+                "bzero(p,n)=memset(p,0,n)"
             ],
             "macFrameworkPath": [
-                "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+                "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks",
             ],
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c17",

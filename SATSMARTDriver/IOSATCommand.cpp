@@ -42,21 +42,24 @@
 #undef DLOG
 #endif
 
+#ifdef __GNUC__
 #ifdef  DEBUG
 #define DLOG(fmt, args ...)  IOLog(fmt, ## args)
 #else
 #define DLOG(fmt, args ...)
 #endif
-
+#else
+#define DLOG(fmt, ...)
+#endif
 //---------------------------------------------------------------------------
 
 #define super IOCommand
 
-OSDefineMetaClass( IOSATCommand, IOCommand )
-OSDefineAbstractStructors( IOSATCommand, IOCommand )
+OSDefineMetaClass( IOSATCommand, IOCommand );
+OSDefineAbstractStructors( IOSATCommand, IOCommand );
 
-OSMetaClassDefineReservedUsed(IOSATCommand, 0)      //setendResult()
-OSMetaClassDefineReservedUsed(IOSATCommand, 1)     // getExtendedLBAPtr()
+OSMetaClassDefineReservedUsed(IOSATCommand, 0);      //setendResult()
+OSMetaClassDefineReservedUsed(IOSATCommand, 1);     // getExtendedLBAPtr()
 OSMetaClassDefineReservedUnused(IOSATCommand, 2);
 OSMetaClassDefineReservedUnused(IOSATCommand, 3);
 OSMetaClassDefineReservedUnused(IOSATCommand, 4);
@@ -726,10 +729,10 @@ IOSATCommand::getExtendedLBA(void)
 #undef super
 
 #define super OSObject
-OSDefineMetaClassAndStructors( IOSATExtendedLBA, OSObject )
+OSDefineMetaClassAndStructors( IOSATExtendedLBA, OSObject );
 
-OSMetaClassDefineReservedUnused(IOSATExtendedLBA, 0)
-OSMetaClassDefineReservedUnused(IOSATExtendedLBA, 1)
+OSMetaClassDefineReservedUnused(IOSATExtendedLBA, 0);
+OSMetaClassDefineReservedUnused(IOSATExtendedLBA, 1);
 OSMetaClassDefineReservedUnused(IOSATExtendedLBA, 2);
 OSMetaClassDefineReservedUnused(IOSATExtendedLBA, 3);
 OSMetaClassDefineReservedUnused(IOSATExtendedLBA, 4);
