@@ -43,9 +43,7 @@ you can move the kext file from its standard install location
 (`/Library/Extensions/`) to the EFI OpenCore directory and load it the OC way
 by editing the config file, `config.plist`.
 
-The `.plugin` file is only used to support the example client. `smartctl`
-does not use it.
-
+The `.plugin` file should be left in the standard location.
 
 Uninstall
 ---------
@@ -79,8 +77,8 @@ smartmontools database.
 `smartctl` should remain able to detect the model and use model-appropriate
 interpretations of raw SMART values.
 
-The `.plugin` file is *only* a library for the demo programs.  You will not need
-it.
+The `.plugin` file is required for `smartctl`, which calls on the plugin interface
+to connect.
 
 ### Compile
 
